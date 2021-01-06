@@ -1,0 +1,40 @@
+#!/bin/bash
+# purpose : revise file names
+# author : Ethan Yu
+
+# find wav files
+FILES="$(sudo find /path/to/your/folder -name '*.*')"
+
+for FILE in $FILES
+do
+  FILENAME="${FILE##*/}"
+  PATH="$(/usr/bin/dirname $FILE)"
+  #FILENAME="$(/usr/bin/basename $FILE)"
+  echo "dirname : " $PATH
+  echo "fileName : "$FILENAME
+  
+  # rename files
+  ID="$(/usr/bin/cut -d'-' -f1 <<<"$FILENAME")"
+  COMMID="$(/usr/bin/cut -d'-' -f2 <<<"$FILENAME")"
+  DOMAIN="$(/usr/bin/cut -d'-' -f3 <<<"$FILENAME")"
+  TOPIC="$(/usr/bin/cut -d'-' -f4 <<<"$FILENAME")"
+  NAME="$(/usr/bin/cut -d'-' -f5 <<<"$FILENAME")"
+  GENDER="$(/usr/bin/cut -d'-' -f6 <<<"$FILENAME")"
+  AGE="$(/usr/bin/cut -d'-' -f7 <<<"$FILENAME")"
+  HOME="$(/usr/bin/cut -d'-' -f8 <<<"$FILENAME")"  
+  
+  echo "id : "$ID
+  echo "command : "$COMMID
+  echo "Domain : "$DOMAIN
+  echo "topic : "$TOPIC
+  echo "name : "$NAME
+  echo "gender : "$GENDER
+  echo "age : "$AGE
+  echo "HOME : "$HOME
+  
+  NEWNAME="$ID"-"$COMMID"-04-"$TOPIC"-"$NAME"-"$GENDER"-"$AGE"-"$HOME"
+  echo "new FILENAME : "$NEWNAME
+  
+  /bin/mv $FILE $PATH/$NEWNAME
+  
+done 
