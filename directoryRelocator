@@ -1,0 +1,17 @@
+#!/bin/bash
+#purpose : relocate certain directories that match "find"
+
+YESTERDAY="$(date '+%Y-%m-%d' -d '1 day ago')"
+FOLDERS="$(sudo find /path/to/your/folder/$YESTERDAY -type d -name 'script1_t_*' -o -type d -name 'script1_u_*' -o -type d -name 'script1_v_*' -o -type d -name 'script1_z_*' -o -type d -name 'script1_aa_*' -o -type d -name 'script1_ab_*')"
+
+sudo mkdir /path/to/your/new/folder/$YESTERDAY
+
+for FOLDER in $FOLDERS
+do
+  IDX=${FOLDER: (-4)}
+  if [ $IDX -ge 501 -a $IDX -le 1000 ]
+  then 
+    sudo mv -t /path/to/your/folder/$YESTERDAY $FOLDER
+  fi
+done
+
